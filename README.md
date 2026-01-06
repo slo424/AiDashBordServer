@@ -21,3 +21,5 @@ As the document given for this project, the main entry point of the APIs is "api
 - Before running and starting the AiDashboardApplication, please be sure to reload with Maven to install all the required dependencies
 - The AiDashboardApplication can then be, and it will be running on Port 8080 by default
 - when testing locally to a GET endpoint with URL like "http://localhost:8080/api/usage/"
+
+An assumption that I have made is that there are no AI data entries as there is no functionalities for getting them nor is it reqired. A set of AI Usage data is hardcoded in the system.
