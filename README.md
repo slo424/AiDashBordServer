@@ -12,9 +12,10 @@ As the document given for this project, the main entry point of the APIs is "api
 
 #####   additional functionalities and APIs are also implemented as helper functions and to be used by the frontend web application
 
-- This project is implemented with IntelliJ, Java 21, Spring framework, and Maven
+- This project is implemented with IntelliJ, Java 19, Spring framework, and Maven
 - A set of sample AI usage data is used, and the results shown in this project is computed around this data
 - Errors and exceptions are gracefully handled to avoid crashing
+- 2 JUnit test cases are included
 
 ## How to Run
 - As the project is built with IntelliJ, it is exepcted to be imported and run
