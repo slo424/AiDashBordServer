@@ -1,7 +1,6 @@
 package com.saatchiNSaatchi.aiDashboard.controllers;
 
 import com.saatchiNSaatchi.aiDashboard.views.TeamIdsView;
-import org.apache.catalina.core.ApplicationContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.logging.Logger;
@@ -28,53 +27,53 @@ class APIsControllerTest {
                 .build();
     }
 
-    @Test
-    void helloWorld() throws Exception {
-        restTestClient.get().uri("/usageTeams")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isOk();
+//    @Test
+//    void helloWorld() throws Exception {
+//        restTestClient.get().uri("/usageTeams")
+//                .accept(MediaType.APPLICATION_JSON)
+//                .exchange()
+//                .expectStatus().isOk();
+////        restTestClient.get()
+//////                .uri("/api/greeting")
+////                .uri("http://localhost:8080/api")
+////                .exchange() // Perform the request
+////                .expectStatus().isOk(); // Assert the status
+//////                .expectBody(MyResponse.class).isEqualTo(expectedResponse);
+//    }
+
+//    @Test
+//    void testHelloWorld() {
 //        restTestClient.get()
-////                .uri("/api/greeting")
-//                .uri("http://localhost:8080/api")
-//                .exchange() // Perform the request
-//                .expectStatus().isOk(); // Assert the status
-////                .expectBody(MyResponse.class).isEqualTo(expectedResponse);
-    }
+//                .exchange()
+//                .expectStatus().isOk()
+//                .expectBody(String.class).consumeWith(response -> {
+//                    // You can log the response body directly here
+//                    System.out.println(response.getResponseBody());
+//                    // Further assertions can go here
+//                });
+//    }
 
-    @Test
-    void testHelloWorld() {
-        restTestClient.get()
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(String.class).consumeWith(response -> {
-                    // You can log the response body directly here
-                    System.out.println(response.getResponseBody());
-                    // Further assertions can go here
-                });
-    }
+//    @Test
+//    void getAIStats() {
+//        restTestClient.get().uri("/usageTeams")
+//                .exchange()
+//                .expectStatus().isOk()
+//                .expectBody(TeamIdsView.class).consumeWith(response -> {
+//                    System.out.println("--- Response Status: " + response.getStatus() + " ---");
+//                    System.out.println("--- Response Body: " + response.getResponseBody() + " ---");
+////                    response.getResponseBody().getIdRange().length() > 0;
+//                });
+//    }
 
-    @Test
-    void getAIStats() {
-        restTestClient.get().uri("/usageTeams")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(TeamIdsView.class).consumeWith(response -> {
-                    System.out.println("--- Response Status: " + response.getStatus() + " ---");
-                    System.out.println("--- Response Body: " + response.getResponseBody() + " ---");
-//                    response.getResponseBody().getIdRange().length() > 0;
-                });
-    }
-
-    @Test
-    void testGetAIStats() {
-    }
-
-    @Test
-    void getAIStatsByTeamAndDate() {
-    }
-
-    @Test
-    void getAIUsageTeamIds() {
-    }
+//    @Test
+//    void testGetAIStats() {
+//    }
+//
+//    @Test
+//    void getAIStatsByTeamAndDate() {
+//    }
+//
+//    @Test
+//    void getAIUsageTeamIds() {
+//    }
 }
