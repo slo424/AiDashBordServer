@@ -31,7 +31,7 @@ public class APIsController {
     }
 
     @GetMapping("/usage")
-    public AiStatView getAIStats( @RequestBody @Validated GetAIStatsCommand getAIStatsCommand) {
+    public AiStatView getAIStats(GetAIStatsCommand getAIStatsCommand) {
         getAIStatsCommand.setTeamId(0L);
         return new AiStatView(0L, getAIStatsCommand.execute(), 7L);
     }

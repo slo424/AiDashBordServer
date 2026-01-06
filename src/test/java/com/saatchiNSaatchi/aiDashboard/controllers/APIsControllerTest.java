@@ -1,79 +1,37 @@
 package com.saatchiNSaatchi.aiDashboard.controllers;
 
-import com.saatchiNSaatchi.aiDashboard.views.TeamIdsView;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.logging.Logger;
-import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.client.RestTestClient;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-//@WebMvcTest(APIsController.class) // Focuses context on YourController
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@AutoConfigureRestTestClient // Configures RestTestClient
-class APIsControllerTest {
+@SpringBootTest(classes = APIsController.class)
+@AutoConfigureMockMvc
+public class APIsControllerTest {
 
-//    @Autowired
-    private RestTestClient restTestClient;
-
-    private static final Logger logger = LoggerFactory.getLogger(APIsController.class);
-
-    @BeforeEach
-    void setUp() {
-        restTestClient = RestTestClient.bindToController(new APIsController())
-                .baseUrl("/api")
-                .build();
+    @Autowired
+    private MockMvc mockMvc;
+    @Test
+    public void greetingShouldReturnDefaultMessage() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("Hello, World!"));
     }
 
-//    @Test
-//    void helloWorld() throws Exception {
-//        restTestClient.get().uri("/usageTeams")
-//                .accept(MediaType.APPLICATION_JSON)
-//                .exchange()
-//                .expectStatus().isOk();
-////        restTestClient.get()
-//////                .uri("/api/greeting")
-////                .uri("http://localhost:8080/api")
-////                .exchange() // Perform the request
-////                .expectStatus().isOk(); // Assert the status
-//////                .expectBody(MyResponse.class).isEqualTo(expectedResponse);
-//    }
-
-//    @Test
-//    void testHelloWorld() {
-//        restTestClient.get()
-//                .exchange()
-//                .expectStatus().isOk()
-//                .expectBody(String.class).consumeWith(response -> {
-//                    // You can log the response body directly here
-//                    System.out.println(response.getResponseBody());
-//                    // Further assertions can go here
-//                });
-//    }
-
-//    @Test
-//    void getAIStats() {
-//        restTestClient.get().uri("/usageTeams")
-//                .exchange()
-//                .expectStatus().isOk()
-//                .expectBody(TeamIdsView.class).consumeWith(response -> {
-//                    System.out.println("--- Response Status: " + response.getStatus() + " ---");
-//                    System.out.println("--- Response Body: " + response.getResponseBody() + " ---");
-////                    response.getResponseBody().getIdRange().length() > 0;
-//                });
-//    }
-
-//    @Test
-//    void testGetAIStats() {
-//    }
-//
-//    @Test
-//    void getAIStatsByTeamAndDate() {
-//    }
-//
-//    @Test
-//    void getAIUsageTeamIds() {
-//    }
+    @Test
+    void getAIStats() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/api/usage")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.ORIGIN, "http://specific-allowed-origin.com") // Simulate cross-origin
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(406));
+    }
 }
