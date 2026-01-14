@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,9 +26,9 @@ public class APIsController {
     public static final int TOP_ENTRIES_SHOWN = 3;
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    @GetMapping
-    public String helloWorld() {
-        return "Hello, World!";
+    @GetMapping("/greeting")
+    public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return String.format("Hello, %s!", name);
     }
 
     @GetMapping("/usage")

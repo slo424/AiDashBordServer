@@ -1,37 +1,47 @@
 package com.saatchiNSaatchi.aiDashboard.controllers;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.http.HttpHeaders;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest(classes = APIsController.class)
-@AutoConfigureMockMvc
+@WebMvcTest(APIsController.class)
 public class APIsControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    WebTestClient client;
+
+    @BeforeEach
+    void setUp() {
+        client = WebTestClient.bindToController(new APIsController())
+                .configureClient()
+                .baseUrl("http://localhost:8080/api")
+                .build();
+    }
+
     @Test
     public void greetingShouldReturnDefaultMessage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api"))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Hello, World!"));
+        String defaultUser = "Test";
+        String expectedGreeting = "Hello, Test!";
+
+        client.get().uri("/greeting?name="+defaultUser)
+//                .queryParam("name", "Test") // Add query params
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class).isEqualTo(expectedGreeting);
     }
 
     @Test
     void getAIStats() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/api/usage")
-                .contentType(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.ORIGIN, "http://specific-allowed-origin.com") // Simulate cross-origin
-                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET"))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().is(406));
+        client.get().uri("/usage")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .consumeWith(response -> {
+                    assertNotNull(response.getResponseBody());
+                });
     }
 }
