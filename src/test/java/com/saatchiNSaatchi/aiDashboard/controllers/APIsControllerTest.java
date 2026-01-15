@@ -1,5 +1,6 @@
 package com.saatchiNSaatchi.aiDashboard.controllers;
 
+import com.saatchiNSaatchi.aiDashboard.views.AiStatView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -41,6 +42,20 @@ public class APIsControllerTest {
                 .expectStatus().isOk()
                 .expectBody()
                 .consumeWith(response -> {
+                    assertNotNull(response.getResponseBody());
+                });
+    }
+
+    @Test
+    void testGetAIStats() {
+        client.get().uri("/usage/1")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(AiStatView.class)
+                .consumeWith(response -> {
+                    System.out.println("Response Body: " + response.getResponseBody().getTotalCalls());
+                    assertNotNull(response.getResponseBody().getTopModels());
                     assertNotNull(response.getResponseBody());
                 });
     }

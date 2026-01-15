@@ -1,5 +1,6 @@
 package com.saatchiNSaatchi.aiDashboard.views;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.saatchiNSaatchi.aiDashboard.Models.AIUsage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,18 @@ public class AiStatView {
     private final List<String> topModels;
     private final String period;
     private final String message;
+
+    public AiStatView(@JsonProperty("estimatedCostInCents") long estimatedCostInCents, @JsonProperty("message") String message,
+                      @JsonProperty("period") String period, @JsonProperty("teamId") long teamId,
+                      @JsonProperty("tokensConsumed") int tokensConsumed, @JsonProperty("totalCalls") int totalCalls) {
+        this.teamId = teamId;
+        this.totalCalls = totalCalls;
+        this.tokensConsumed = tokensConsumed;
+        this.estimatedCostInCents = estimatedCostInCents;
+        this.topModels = new ArrayList<>();
+        this.period = period;
+        this.message = message;
+    }
 
     public AiStatView(Long teamId, List<AIUsage> list, Long daysDiff) {
         this.teamId = teamId;

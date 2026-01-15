@@ -47,6 +47,12 @@ public interface AdminController {
                         .toList();
             }
             if (aiUsageList.size() > 0) {
+                if (start == null && end == null) {
+                    return aiUsageList.stream()
+                            .filter(aiUsage -> aiUsage.getTeamId() == teamId &&
+                                                aiUsage.getDate().isAfter(LocalDate.now().minusDays(7)))
+                            .toList();
+                }
                 return aiUsageList.stream()
                         .filter(aiUsage -> aiUsage.getTeamId() == teamId &&
                                 aiUsage.getDate().isAfter(start) &&
