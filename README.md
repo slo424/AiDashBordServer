@@ -29,4 +29,10 @@ As the document given for this project, the main entry point of the APIs is "api
 - The AiDashboardApplication can then be, and it will be running on Port 8080 by default
 - when testing locally to a GET endpoint with URL like "http://localhost:8080/api/usage/"
 
+## How to Run the Tests
+- Start the application and have it running on port 8080
+- Navigate to the project on the IntelliJ termal ane execute
+    ```mvn test ```
+  
+
 An assumption that I have made is that there are no AI data entries as there is no functionalities for getting them nor is it reqired. A set of AI Usage data is hardcoded in the system.
